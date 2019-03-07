@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('we:server');
 var https = require('https');
+var http = require('http');
 var fs = require('fs');
 var path = require('path');
 const mongoose = require('mongoose');
@@ -40,7 +41,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = https.createServer(httpsOptions, app);
+var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
