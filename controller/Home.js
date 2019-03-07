@@ -6,7 +6,14 @@ const Home = {
   index: (req, res)=>{
     return res.render('contents/hello')
   },
+  // GET /test
+  test: (req, res)=>{
 
+    return res.json({
+      result: true,
+      message: 'Hello, world!'
+    })
+  },
 };
 
 module.exports = Home;

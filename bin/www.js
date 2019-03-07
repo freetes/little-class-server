@@ -6,8 +6,15 @@
 
 var app = require('../app');
 var debug = require('debug')('we:server');
-var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var path = require('path');
 const mongoose = require('mongoose');
+
+const httpsOptions = {
+  key: fs.readFileSync(path.join(__dirname, 'ssl.key')),
+  cert: fs.readFileSync(path.join(__dirname, 'ssl.pem')),
+};
 
 // 连接数据库
 // const options = {
@@ -15,12 +22,12 @@ const mongoose = require('mongoose');
 //   pass : "123"
 // }
 
-// mongoose.connect('mongodb://@localhost:27017/test', options, err=>{
-//   if(err)
-//     console.log("Failed to connect MongoDB Server!");
-//   else
-//     console.log("Succeed in connecting MongoDB Server!");
-// });
+mongoose.connect('mongodb://@120.78.187.88:27017/gray-class-db', err=>{
+  if(err)
+    console.log("Failed to connect MongoDB Server!");
+  else
+    console.log("Succeed in connecting MongoDB Server!");
+});
 
 /**
  * Get port from environment and store in Express.
@@ -33,7 +40,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = https.createServer(httpsOptions, app);
 
 /**
  * Listen on provided port, on all network interfaces.

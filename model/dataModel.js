@@ -1,4 +1,4 @@
-const User = require('./userInfo'),
+const User = require('./userInfo')
 
 const Models = {
   User,
