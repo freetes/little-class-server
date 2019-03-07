@@ -34,7 +34,7 @@ mongoose.connect('mongodb://@120.78.187.88:27017/gray-class-db', err=>{
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '443');
+var port = '443';
 app.set('port', port);
 
 /**
