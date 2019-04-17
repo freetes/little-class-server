@@ -8,11 +8,18 @@ const Api = {
    * @wxInfo
    */
   login: async (req, res)=>{
+    if(!req.body.openid || req.body.openid==''){
+      return res.json({
+        result: false,
+        message: '请求数据错误！',
+      })
+    }
+
     // 搜索用户
     let user = await Models.User.find({openid: req.body.openid})
-
+    
     // 用户存在
-    if(user.length == 0){
+    if(user.length > 0){
       return res.json({
         result: true,
         message: '获取用户信息成功！',
@@ -23,7 +30,7 @@ const Api = {
     // 用户不存在，新建
     user = await Models.User.create({
       openid: req.body.openid,
-      name: req.body.wxInfo.nickname,
+      name: req.body.wxInfo.nickName,
       gender: req.body.wxInfo.gender,
 
       wxInfo: req.body.wxInfo,

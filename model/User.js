@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   openid: String,
   wxInfo: {
-    nickname: String,
+    nickName: String,
     gender: Number,
     city: String,
     avatarUrl: String,
