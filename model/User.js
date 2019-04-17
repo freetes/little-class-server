@@ -3,18 +3,19 @@ const Schema = mongoose.Schema;
 
 // 用户数据模式
 const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true
+  openid: String,
+  wxInfo: {
+    nickname: String,
+    gender: Number,
+    city: String,
+    avatarUrl: String,
   },
-  name: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
+  name: String,
+  gender: Number,
+  email: String,
+
+  createAt: Date,
+  updateAt: Date
 });
 
 //数据模型
