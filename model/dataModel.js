@@ -1,8 +1,8 @@
 const User = require('./User'),
-Group = require('./Group'),
-CheckForm = require('./CheckForm'),
-Check = require('./Check'),
-UserGroup = require('./User-Group'),
+      Group = require('./Group'),
+      CheckForm = require('./CheckForm'),
+      Check = require('./Check'),
+      UserGroup = require('./User-Group')
 
 const Models = {
   User,

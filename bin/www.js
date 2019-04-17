@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('we:server');
 var https = require('https');
-var http = require('http');
 var fs = require('fs');
 var path = require('path');
 const mongoose = require('mongoose');
