@@ -3,6 +3,10 @@ const Models = require('../model/dataModel');
 // 处理主页的请求
 const Api = {
   // POST /login
+  /**
+   * @openid String
+   * @wxInfo
+   */
   login: async (req, res)=>{
     // 搜索用户
     let user = await Models.User.find({openid: req.body.openid})
@@ -28,7 +32,7 @@ const Api = {
 
     return res.json({
       result: true,
-      message: '获取用户信息成功！',
+      message: '新建用户信息成功！',
       data: user
     })
   },
