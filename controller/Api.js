@@ -39,7 +39,7 @@ const Api = {
   // POST /setUserInfo
   setUserInfo: (req, res)=>{
 
-    let user = await Models.User.findOneAndUpdate(
+    let user = await Models.User.update(
       {openid: req.body.openid},
       {
         name: req.body.name,
