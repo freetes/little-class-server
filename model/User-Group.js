@@ -7,6 +7,9 @@ const UserGroupSchema = new Schema({
   group_id: String,
   level: Number,
   join_at: Date,
+
+  // 群信息： * 待完善
+  nickname: String,   // 群昵称
 });
 
 //数据模型
