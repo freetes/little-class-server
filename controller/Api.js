@@ -100,6 +100,20 @@ const Api = {
       data: newGroup
     })
   },
+  
+  // POST /searchGroupByCode
+  searchGroupByCode: async (req, res)=>{
+
+    // 查询群组
+    let groupInfo = await Models.Group.find({code: req.body.code})
+
+    return res.json({
+      result: true,
+      message: '查询群组信息成功！',
+      data: groupInfo
+    })
+  },
+  
 
   // POST /getGroupInfoById
   getGroupInfoById: async (req, res)=>{
