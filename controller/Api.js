@@ -119,7 +119,7 @@ const Api = {
   getGroupInfoById: async (req, res)=>{
 
     // 查询群组
-    let groupInfo = await Models.Group.findById(req.body.group_id)
+    let groupInfo = await Models.Group.findById(req.body.groupId)
 
     return res.json({
       result: true,
@@ -131,7 +131,7 @@ const Api = {
   // POST /joinGroupByGroupId
   joinGroupByGroupId: async (req, res)=>{
     // 查询群组
-    // let groupInfo = await Models.Group.findById(req.body.group_id)
+    // let groupInfo = await Models.Group.findById(req.body.groupId)
 
     // 新建群组-用户
     let userGroupInfo = await Models.UserGroup.create({
@@ -151,7 +151,7 @@ const Api = {
   // POST /exitGroupByGroupId
   exitGroupByGroupId: async (req, res)=>{
     // 查询群组
-    // let groupInfo = await Models.Group.findById(req.body.group_id)
+    // let groupInfo = await Models.Group.findById(req.body.groupId)
 
     // 删除群组-用户
     await Models.UserGroup.findOneAndRemove({group_id: req.body.groupId, user_id: req.body.userId})
@@ -171,11 +171,11 @@ const Api = {
     await Models.Group.findByIdAndUpdate(groupId, {status: -2, update_at: Date.now()})
 
     // 删除群组-用户
-    await Models.UserGroup.findOneAndRemove({group_id: groupId, user_id: userId})
+    await Models.UserGroup.findOneAndRemove({group_id: groupId})
 
     return res.json({
       result: true,
-      message: '退出群组成功！',
+      message: '解散群组成功！',
       data: null
     })
   },
