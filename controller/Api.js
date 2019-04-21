@@ -46,15 +46,15 @@ const Api = {
 
   // POST /setUserInfo
   /**
-   * @openid String
+   * @userId String
    * @name
    * @gender
    * @email
    * @wxInfo
    */
   setUserInfo: async (req, res)=>{
-    let user = await Models.User.findOneAndUpdate(
-      {openid: req.body.openid},
+    let user = await Models.User.findByIdAndUpdate(
+      req.body.userId,
       {
         name: req.body.name,
         gender: req.body.gender,
@@ -88,7 +88,7 @@ const Api = {
 
     // 新建群组-用户
     await Models.UserGroup.create({
-      user_id: req.body.user_id,
+      user_id: req.body.userId,
       group_id: newGroup._id,
       level: 1,
       join_at: Date.now(),
@@ -121,8 +121,8 @@ const Api = {
 
     // 新建群组-用户
     let userGroupInfo = await Models.UserGroup.create({
-      user_id: req.body.user_id,
-      group_id: req.body.group_id,
+      user_id: req.body.userId,
+      group_id: req.body.groupId,
       level: 0,
       join_at: Date.now(),
     })
@@ -140,7 +140,7 @@ const Api = {
     // let groupInfo = await Models.Group.findById(req.body.group_id)
 
     // 删除群组-用户
-    await Models.UserGroup.findOneAndRemove({group_id: req.body.group_id, user_id: req.body.user_id})
+    await Models.UserGroup.findOneAndRemove({group_id: req.body.groupId, user_id: req.body.userId})
 
     return res.json({
       result: true,
