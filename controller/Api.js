@@ -97,7 +97,7 @@ const Api = {
     let users = await Models.UserGroup.find({group_id: req.body.groupId})
 
     for(let item of users){
-      let user = await Models.User.findById(user.user_id)
+      let user = await Models.User.findById(item.user_id)
 
       item = item.toObject()
       item.userInfo = user
