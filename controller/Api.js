@@ -94,13 +94,17 @@ const Api = {
    */
   getUsersByGroupId: async (req, res)=>{
     
-    let users = await Models.UserGroup.find({group_id: req.body.groupId})
+    let logs = await Models.UserGroup.find({group_id: req.body.groupId})
 
-    for(let item of users){
-      let user = await Models.User.findById(item.user_id)
+    let users = []
 
-      item = item.toObject()
-      item.userInfo = user
+    for(let log of logs){
+      let user = await Models.User.findById(log.user_id)
+
+      user = user.toObject()
+      user.userLevel = log.level
+      
+      users.push(user)
     }
 
     return res.json({
@@ -188,11 +192,11 @@ const Api = {
 
     // 查询群组
     let groupInfo = await Models.Group.findById(groupId)
-    // groupInfo = JSON.parse(JSON.stringify(groupInfo))
 
     let log = null
     if(userId){
       log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
+      
       groupInfo = groupInfo.toObject()
       groupInfo.userLevel = log.level
     }
@@ -274,11 +278,11 @@ const Api = {
   getAllGroupsByUserId: async (req, res)=>{
     let userId = req.body.userId
 
-    let groupLogs = await Models.UserGroup.find({user_id: userId})
+    let logs = await Models.UserGroup.find({user_id: userId})
 
     let groups = []
 
-    for(let log of groupLogs){
+    for(let log of logs){
       let groupInfo = await Models.Group.findById(log.group_id)
       
       groupInfo = groupInfo.toObject()
