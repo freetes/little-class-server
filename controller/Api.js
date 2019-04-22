@@ -409,12 +409,12 @@ const Api = {
 
     let data = {
       user_id: userId,
-      position: req.body.position,
       title: req.body.title,
       subtitle: req.body.subtitle,
       content: req.body.content,
-      position: req.body.position,
+      
       create_at: Date.now()
+      // position: req.body.position,
     }
 
     let oneWord = await Models.OneWord.create(data)
