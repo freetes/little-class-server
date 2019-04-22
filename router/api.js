@@ -9,10 +9,10 @@ router.post('/setUserInfo', api.setUserInfo);
 router.post('/createGroup', api.createGroup);
 router.post('/searchGroupByCode', api.searchGroupByCode);
 router.post('/getGroupInfoById', api.getGroupInfoById);
-router.post('/joinGroupByGroupId', api.joinGroupByGroupId);
-router.post('/exitGroupByGroupId', api.exitGroupByGroupId);
-router.post('/disbandGroupByGroupId', api.disbandGroupByGroupId);
 router.post('/getAllGroupsByUserId', api.getAllGroupsByUserId);
+router.post('/joinGroup', api.joinGroup);
+router.post('/exitGroup', api.exitGroup);
+router.post('/disbandGroup', api.disbandGroup);
 
 router.post('/createCheckForm', api.createCheckForm);
 router.post('/getGroupCheckForms', api.getGroupCheckForms);

@@ -165,12 +165,12 @@ const Api = {
     })
   },
 
-  // POST /joinGroupByGroupId
+  // POST /joinGroup
   /**
    * @userId
    * @groupId
    */
-  joinGroupByGroupId: async (req, res)=>{
+  joinGroup: async (req, res)=>{
     // 查询群组
     // let groupInfo = await Models.Group.findById(req.body.groupId)
 
@@ -189,12 +189,12 @@ const Api = {
     })
   },
 
-  // POST /exitGroupByGroupId
+  // POST /exitGroup
   /**
    * @groupId
    * @userId
    */
-  exitGroupByGroupId: async (req, res)=>{
+  exitGroup: async (req, res)=>{
     // 查询群组
     // let groupInfo = await Models.Group.findById(req.body.groupId)
 
@@ -208,11 +208,11 @@ const Api = {
     })
   },
 
-  // POST /disbandGroupByGroupId
+  // POST /disbandGroup
   /**
    * @groupId
    */
-  disbandGroupByGroupId: async (req, res)=>{
+  disbandGroup: async (req, res)=>{
     let groupId = req.body.groupId, userId = req.body.userId
 
     // 修改群组状态
