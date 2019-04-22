@@ -289,6 +289,29 @@ const Api = {
     })
   },
 
+  // POST /getCheckFormsLength
+  /**
+   * @title
+   * @position
+   * @groupId
+   * @userId
+   * @duration
+   * @code
+   * @createAt
+   * @endAt
+   */
+  getCheckFormsLength: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let length = await Models.CheckForm.count({group_id: groupId})
+
+    return res.json({
+      result: true,
+      message: '获取签到表数成功！',
+      data: length
+    })
+  },
+
   // POST /getGroupCheckForms
   /**
    * @groupId
