@@ -21,4 +21,8 @@ router.post('/getChecksByCheckFormId', api.getChecksByCheckFormId);
 
 router.post('/createCheck', api.createCheck);
 
+router.post('/createOneWord', api.createOneWord);
+router.post('/getOneWordById', api.getOneWordById);
+router.post('/getOneWords', api.getOneWords);
+
 module.exports = router;
