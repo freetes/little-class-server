@@ -154,7 +154,8 @@ const Api = {
     let log = null
     if(userId){
       log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
-      groupInfo = Object.assign(groupInfo, {userLevel: log.level})
+      groupInfo = groupInfo.toObject()
+      groupInfo.userLevel = log.level
     }
 
     return res.json({
@@ -241,7 +242,9 @@ const Api = {
     for(let log of groupLogs){
       let groupInfo = await Models.Group.findById(log.group_id)
       
-      groupInfo = Object.assign(groupInfo, {userLevel: log.level})
+      groupInfo = groupInfo.toObject()
+      groupInfo.userLevel = log.level
+
       groups.push(groupInfo)
     }
 
