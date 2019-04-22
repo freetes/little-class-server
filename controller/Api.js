@@ -121,6 +121,23 @@ const Api = {
       data: newGroup
     })
   },
+
+  // POST /setGroupInfo
+  /**
+   * @groupInfo
+   * @groupId
+   */
+  setGroupInfo: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let group = await Models.Group.findByIdAndUpdate(groupId, req.body.groupInfo)
+
+    return res.json({
+      result: true,
+      message: '修改群组信息成功！',
+      data: group
+    })
+  },
   
   // POST /searchGroupByCode
   /**
@@ -259,9 +276,9 @@ const Api = {
   /**
    * @title
    * @position
+   * @distance
    * @groupId
    * @userId
-   * @duration
    * @code
    * @createAt
    * @endAt
@@ -272,9 +289,9 @@ const Api = {
     let data = {
       title: req.body.title,
       position: req.body.position,
+      distance: req.body.distance,
       group_id: groupId,
       user_id: userId,
-      duration: req.body.duration,
       code: req.body.code,
       create_at: req.body.createAt,
       end_at: req.body.endAt
@@ -284,21 +301,14 @@ const Api = {
 
     return res.json({
       result: true,
-      message: '新建签到成功！',
+      message: '新建签到表成功！',
       data: checkForm
     })
   },
 
   // POST /getCheckFormsLength
   /**
-   * @title
-   * @position
    * @groupId
-   * @userId
-   * @duration
-   * @code
-   * @createAt
-   * @endAt
    */
   getCheckFormsLength: async (req, res)=>{
     let groupId = req.body.groupId

@@ -7,6 +7,7 @@ router.post('/getUserInfoById', api.getUserInfoById);
 router.post('/setUserInfo', api.setUserInfo);
 
 router.post('/createGroup', api.createGroup);
+router.post('/setGroupInfo', api.setGroupInfo);
 router.post('/searchGroupByCode', api.searchGroupByCode);
 router.post('/getGroupInfoById', api.getGroupInfoById);
 router.post('/getAllGroupsByUserId', api.getAllGroupsByUserId);

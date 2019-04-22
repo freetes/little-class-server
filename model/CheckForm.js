@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const CheckFormSchema = new Schema({
   title: String,
   position: String,
+  distance: Number,
   group_id: String,
   user_id: String,
-  duration: Number,
   create_at: Date,
   end_at: Date,
   code: Number,
