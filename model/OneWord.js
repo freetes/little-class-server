@@ -17,4 +17,4 @@ const OneWordSchema = new Schema({
 //数据模型
 const OneWord = mongoose.model('OneWord', OneWordSchema)
 
-module.exports = CheckForm;
+module.exports = OneWord;
