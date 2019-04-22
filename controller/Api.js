@@ -44,6 +44,22 @@ const Api = {
     })
   },
 
+  // POST /getUserInfoById
+  /**
+   * @userId String
+   */
+  getUserInfoById: async (req, res)=>{
+    let userId = req.body.userId
+
+    let user = await Models.User.findById(userId)
+
+    return res.json({
+      result: true,
+      message: '获取用户信息成功！',
+      data: user
+    })
+  },
+
   // POST /setUserInfo
   /**
    * @userId String
@@ -73,6 +89,11 @@ const Api = {
   },
 
   // POST /createGroup
+  /**
+   * @groupName
+   * @description
+   * @userId
+   */
   createGroup: async (req, res)=>{
     let groupCode = await Models.Group.count({})
 
@@ -102,6 +123,9 @@ const Api = {
   },
   
   // POST /searchGroupByCode
+  /**
+   * @code
+   */
   searchGroupByCode: async (req, res)=>{
 
     // 查询群组
@@ -113,13 +137,24 @@ const Api = {
       data: groupInfo
     })
   },
-  
 
   // POST /getGroupInfoById
+  /**
+   * @groupId
+   * @userId
+   */
   getGroupInfoById: async (req, res)=>{
 
+    let groupId = req.body.groupId, userId = req.body.userId
+
     // 查询群组
-    let groupInfo = await Models.Group.findById(req.body.groupId)
+    let groupInfo = await Models.Group.findById(groupId)
+
+    let log = null
+    if(userId){
+      log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
+      groupInfo.userLevel = log.level
+    }
 
     return res.json({
       result: true,
@@ -129,6 +164,10 @@ const Api = {
   },
 
   // POST /joinGroupByGroupId
+  /**
+   * @userId
+   * @groupId
+   */
   joinGroupByGroupId: async (req, res)=>{
     // 查询群组
     // let groupInfo = await Models.Group.findById(req.body.groupId)
@@ -149,6 +188,10 @@ const Api = {
   },
 
   // POST /exitGroupByGroupId
+  /**
+   * @groupId
+   * @userId
+   */
   exitGroupByGroupId: async (req, res)=>{
     // 查询群组
     // let groupInfo = await Models.Group.findById(req.body.groupId)
@@ -164,6 +207,9 @@ const Api = {
   },
 
   // POST /disbandGroupByGroupId
+  /**
+   * @groupId
+   */
   disbandGroupByGroupId: async (req, res)=>{
     let groupId = req.body.groupId, userId = req.body.userId
 
@@ -181,6 +227,9 @@ const Api = {
   },
 
   // POST /getAllGroupsByUserId
+  /**
+   * @userId
+   */
   getAllGroupsByUserId: async (req, res)=>{
     let userId = req.body.userId
 
@@ -190,7 +239,8 @@ const Api = {
 
     for(let log of groupLogs){
       let groupInfo = await Models.Group.findById(log.group_id)
-
+      
+      groupInfo.userLevel = log.level
       groups.push(groupInfo)
     }
 
@@ -198,6 +248,116 @@ const Api = {
       result: true,
       message: '查询群组成功！',
       data: groups
+    })
+  },
+
+  // POST /createCheckForm
+  /**
+   * @title
+   * @position
+   * @groupId
+   * @userId
+   * @duration
+   * @code
+   * @createAt
+   * @endAt
+   */
+  createCheckForm: async (req, res)=>{
+    let groupId = req.body.groupId, userId = req.body.userId
+
+    let data = {
+      title: req.body.title,
+      position: req.body.position,
+      group_id: groupId,
+      user_id: userId,
+      duration: req.body.duration,
+      code: req.body.code,
+      create_at: req.body.createAt,
+      end_at: req.body.endAt
+    }
+
+    let checkForm = await Models.CheckForm.create(data)
+
+    return res.json({
+      result: true,
+      message: '新建签到成功！',
+      data: checkForm
+    })
+  },
+
+  // POST /getGroupCheckForms
+  /**
+   * @groupId
+   */
+  getGroupCheckForms: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let checkForms = await Models.CheckForm.find({group_id: groupId})
+
+    return res.json({
+      result: true,
+      message: '获取签到表s成功！',
+      data: checkForms
+    })
+  },
+  
+  // POST /getCheckFormById
+  /**
+   * @checkFormId
+   */
+  getCheckFormById: async (req, res)=>{
+    let checkFormId = req.body.checkFormId
+
+    let checkForm = await Models.CheckForm.findById(checkFormId)
+
+    return res.json({
+      result: true,
+      message: '获取签到表成功！',
+      data: checkForm
+    })
+  },
+
+  // POST /getChecksByCheckFormId
+  /**
+   * @checkFormId
+   */
+  getChecksByCheckFormId: async (req, res)=>{
+    let checkFormId = req.body.checkFormId
+
+    let checks = await Models.Check.find({form_id: checkFormId})
+
+    return res.json({
+      result: true,
+      message: '获取签到s成功！',
+      data: checks
+    })
+  },
+
+  // POST /createCheck
+  /**
+   * @checkFormId
+   * @userId
+   * @position
+   * @checkAt
+   * @status
+   */
+  createCheck: async (req, res)=>{
+    let checkFormId = req.body.checkFormId, userId = userId
+
+    let data = {
+      form_id: checkFormId,
+      user_id: userId,
+      position: req.body.position,
+      check_at: req.body.checkAt,
+      status: req.body.status,
+    }
+
+    let check = await Models.Check.create(data)
+
+    return res.json({
+      result: true,
+      message: '签到成功！',
+      data: check
     })
   },
 };
