@@ -413,7 +413,7 @@ const Api = {
       title: req.body.title,
       subtitle: req.body.subtitle,
       content: req.body.content,
-      position: req.body.content,
+      position: req.body.position,
       create_at: Date.now()
     }
 
