@@ -21,7 +21,7 @@ router.post('/disbandGroup', api.disbandGroup);
 
 // CheckForm
 router.post('/createCheckForm', api.createCheckForm);
-router.post('/getCheckFormsByGroupId', api.getCheckFormsLength);
+router.post('/getCheckFormsByGroupId', api.getCheckFormsByGroupId);
 router.post('/getGroupCheckForms', api.getGroupCheckForms);
 router.post('/getCheckFormById', api.getCheckFormById);
 router.post('/getChecksByCheckFormId', api.getChecksByCheckFormId);
