@@ -88,6 +88,28 @@ const Api = {
     })
   },
 
+  // POST /setUserInfo
+  /**
+   * @groupId String
+   */
+  getUsersByGroupId: async (req, res)=>{
+    
+    let users = await Models.UserGroup.find({group_id: req.body.groupId})
+
+    for(let item of users){
+      let user = await Models.User.findById(user.user_id)
+
+      item = item.toObject()
+      item.userInfo = user
+    }
+
+    return res.json({
+      result: true,
+      message: '获取群员s信息成功！',
+      data: users
+    })
+  },
+
   // POST /createGroup
   /**
    * @groupName
@@ -306,19 +328,19 @@ const Api = {
     })
   },
 
-  // POST /getCheckFormsLength
+  // POST /getCheckFormsByGroupId
   /**
    * @groupId
    */
-  getCheckFormsLength: async (req, res)=>{
+  getCheckFormsByGroupId: async (req, res)=>{
     let groupId = req.body.groupId
 
-    let length = await Models.CheckForm.count({group_id: groupId})
+    let forms = await Models.CheckForm.find({group_id: groupId})
 
     return res.json({
       result: true,
-      message: '获取签到表数成功！',
-      data: length
+      message: '获取签到表成功！',
+      data: forms
     })
   },
 
@@ -346,11 +368,15 @@ const Api = {
     let checkFormId = req.body.checkFormId
 
     let checkForm = await Models.CheckForm.findById(checkFormId)
+    let group = await Models.Group.findById(checkForm.group_id)
 
     return res.json({
       result: true,
       message: '获取签到表成功！',
-      data: checkForm
+      data: {
+        checkForm,
+        group,
+      }
     })
   },
 
@@ -362,6 +388,13 @@ const Api = {
     let checkFormId = req.body.checkFormId
 
     let checks = await Models.Check.find({form_id: checkFormId})
+
+    for(let check of checks){
+      let user = await Models.User.findById(check.user_id)
+
+      check = check.toObject()
+      check.userInfo = user
+    }
 
     return res.json({
       result: true,
