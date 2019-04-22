@@ -452,7 +452,10 @@ const Api = {
   getOneWords: async (req, res)=>{
     let page = req.body.page || 1, limit = req.body.limit || 20
 
-    let oneWords = await Models.OneWord.find({}).sort({_id: -1}).skip(page*limit).limit(20)
+    let oneWords = await Models.OneWord.find({})
+                        .sort({_id: -1})
+                        .skip((page-1)*limit)
+                        .limit(20)
 
     return res.json({
       result: true,
