@@ -383,24 +383,24 @@ const Api = {
   getCheckFormById: async (req, res)=>{
     let checkFormId = req.body.checkFormId
 
-    let checkForm = await Models.CheckForm.findById(checkFormId).sort({_id: -1})
+    let checkForm = await Models.CheckForm.findById(checkFormId)
     let group = await Models.Group.findById(checkForm.group_id)
+    let users = await Models.UserGroup.find({group_id: checkForm.group_id})
 
     checkForm = JSON.parse(JSON.stringify(checkForm))
-    checkForm.success = []
-    checkForm.fail = []
+    checkForm.members = []
 
-    let success = await Models.Check.find({form_id: checkFormId, status: 1})
-    let fail = await Models.Check.find({form_id: checkFormId, status: -1})
-
-    for(let item of success){
-      let user = await Models.User.find({_id: item.user_id})
-      checkForm.success.push(user)
-    }
-
-    for(let item of fail){
-      let user = await Models.User.find({_id: item.user_id})
-      checkForm.fail.push(user)
+    for(let log of users){
+      let user = await Models.User.findById(log.user_id)
+      let check = await Models.Check.findOne({form_id: checkFormId, user_id: log.user_id})
+      
+      user = user.toObject()
+      user.checkStatus = 0
+      if(check){
+        user.checkStatus = check.status
+      }
+      
+      checkForm.members.push(user)
     }
 
     return res.json({
