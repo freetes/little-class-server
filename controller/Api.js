@@ -196,8 +196,10 @@ const Api = {
     if(userId){
       let log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
       
-      groupInfo = groupInfo.toObject()
-      groupInfo.userLevel = log.level
+      if(log){
+        groupInfo = groupInfo.toObject()
+        groupInfo.userLevel = log.level
+      }
     }
 
     return res.json({
