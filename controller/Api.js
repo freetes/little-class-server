@@ -345,7 +345,7 @@ const Api = {
   getCheckFormsByGroupId: async (req, res)=>{
     let groupId = req.body.groupId, userId = req.body.userId
 
-    let forms = await Models.CheckForm.find({group_id: groupId})
+    let forms = await Models.CheckForm.find({group_id: groupId}).sort({_id: -1})
 
     forms = JSON.parse(JSON.stringify(forms))
 
