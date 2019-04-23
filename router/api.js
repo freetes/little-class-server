@@ -34,6 +34,6 @@ router.post('/getOneWordById', api.getOneWordById);
 router.post('/getOneWords', api.getOneWords);
 
 // 集成
-router.post('/', api)
+// router.post('/', api)
 
 module.exports = router;
