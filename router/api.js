@@ -22,7 +22,6 @@ router.post('/disbandGroup', api.disbandGroup);
 // CheckForm
 router.post('/createCheckForm', api.createCheckForm);
 router.post('/getCheckFormsByGroupId', api.getCheckFormsByGroupId);
-router.post('/getGroupCheckForms', api.getGroupCheckForms);
 router.post('/getCheckFormById', api.getCheckFormById);
 router.post('/getChecksByCheckFormId', api.getChecksByCheckFormId);
 
@@ -33,5 +32,8 @@ router.post('/createCheck', api.createCheck);
 router.post('/createOneWord', api.createOneWord);
 router.post('/getOneWordById', api.getOneWordById);
 router.post('/getOneWords', api.getOneWords);
+
+// 集成
+router.post('/', api)
 
 module.exports = router;

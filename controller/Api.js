@@ -339,7 +339,17 @@ const Api = {
   getCheckFormsByGroupId: async (req, res)=>{
     let groupId = req.body.groupId
 
+    // let usersCount = await Models.UserGroup.count({group_id: groupId})
+
     let forms = await Models.CheckForm.find({group_id: groupId})
+
+    for(let form of forms){
+      let successCount = await Models.Check.count({form_id: form._id, status: 1})
+      let failCount = await Models.Check.count({form_id: form._id, status: -1})
+      form = form.toObject()
+      form.successCount = successCount
+      form.failCount = failCount
+    }
 
     return res.json({
       result: true,
@@ -348,22 +358,6 @@ const Api = {
     })
   },
 
-  // POST /getGroupCheckForms
-  /**
-   * @groupId
-   */
-  getGroupCheckForms: async (req, res)=>{
-    let groupId = req.body.groupId
-
-    let checkForms = await Models.CheckForm.find({group_id: groupId})
-
-    return res.json({
-      result: true,
-      message: '获取签到表s成功！',
-      data: checkForms
-    })
-  },
-  
   // POST /getCheckFormById
   /**
    * @checkFormId
@@ -373,6 +367,23 @@ const Api = {
 
     let checkForm = await Models.CheckForm.findById(checkFormId)
     let group = await Models.Group.findById(checkForm.group_id)
+
+    checkForm.toObject()
+    checkForm.success = []
+    checkForm.fail = []
+
+    let success = await Models.Check.find({form_id: checkFormId, status: 1})
+    let fail = await Models.Check.find({form_id: checkFormId, status: -1})
+
+    for(let item of success){
+      let user = await Models.User.find({_id: item.user_id})
+      checkForm.success.push(user)
+    }
+
+    for(let item of fail){
+      let user = await Models.User.find({_id: item.user_id})
+      checkForm.fail.push(user)
+    }
 
     return res.json({
       result: true,
