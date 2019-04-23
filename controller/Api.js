@@ -446,7 +446,7 @@ const Api = {
    * @status
    */
   createCheck: async (req, res)=>{
-    let checkFormId = req.body.checkFormId, userId = userId
+    let checkFormId = req.body.checkFormId, userId = req.body.userId
 
     let data = {
       form_id: checkFormId,
