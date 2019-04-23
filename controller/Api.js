@@ -101,7 +101,7 @@ const Api = {
     for(let log of logs){
       let user = await Models.User.findById(log.user_id)
 
-      user = user.toObject()
+      user = JSON.parse(JSON.stringify(user))
       user.userLevel = log.level
       
       users.push(user)
@@ -193,9 +193,8 @@ const Api = {
     // 查询群组
     let groupInfo = await Models.Group.findById(groupId)
 
-    let log = null
     if(userId){
-      log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
+      let log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
       
       groupInfo = groupInfo.toObject()
       groupInfo.userLevel = log.level
@@ -343,10 +342,12 @@ const Api = {
 
     let forms = await Models.CheckForm.find({group_id: groupId})
 
+    forms = JSON.parse(JSON.stringify(forms))
+
     for(let form of forms){
       let successCount = await Models.Check.count({form_id: form._id, status: 1})
       let failCount = await Models.Check.count({form_id: form._id, status: -1})
-      form = form.toObject()
+
       form.successCount = successCount
       form.failCount = failCount
     }
@@ -368,7 +369,7 @@ const Api = {
     let checkForm = await Models.CheckForm.findById(checkFormId)
     let group = await Models.Group.findById(checkForm.group_id)
 
-    checkForm.toObject()
+    checkForm = JSON.parse(JSON.stringify(checkForm))
     checkForm.success = []
     checkForm.fail = []
 
@@ -404,10 +405,11 @@ const Api = {
 
     let checks = await Models.Check.find({form_id: checkFormId})
 
+    checks = JSON.parse(JSON.stringify(checks))
+
     for(let check of checks){
       let user = await Models.User.findById(check.user_id)
 
-      check = check.toObject()
       check.userInfo = user
     }
 
