@@ -340,9 +340,10 @@ const Api = {
   // POST /getCheckFormsByGroupId
   /**
    * @groupId
+   * @userId
    */
   getCheckFormsByGroupId: async (req, res)=>{
-    let groupId = req.body.groupId
+    let groupId = req.body.groupId, userId = req.body.userId
 
     // let usersCount = await Models.UserGroup.count({group_id: groupId})
 
@@ -351,12 +352,22 @@ const Api = {
     forms = JSON.parse(JSON.stringify(forms))
 
     for(let form of forms){
-      let successCount = await Models.Check.count({form_id: form._id, status: 1})
-      let failCount = await Models.Check.count({form_id: form._id, status: -1})
+      let user = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
 
-      form.successCount = successCount
-      form.failCount = failCount
+      if(user.level == 1){
+        let successCount = await Models.Check.count({form_id: form._id, status: 1})
+        let failCount = await Models.Check.count({form_id: form._id, status: -1})
+  
+        form.successCount = successCount
+        form.failCount = failCount
+      }
+      else{
+        let check = await Models.Check.find({form_id: form._id, user_id: userId})
+  
+        form.checkStatus = check.status
+      }
     }
+    
 
     return res.json({
       result: true,
