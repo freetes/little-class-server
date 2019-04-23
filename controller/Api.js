@@ -277,7 +277,7 @@ const Api = {
   getAllGroupsByUserId: async (req, res)=>{
     let userId = req.body.userId
 
-    let logs = await Models.UserGroup.find({user_id: userId})
+    let logs = await Models.UserGroup.find({user_id: userId}).sort({_id: -1})
 
     let groups = []
 
@@ -354,7 +354,7 @@ const Api = {
 
     return res.json({
       result: true,
-      message: '获取签到表成功！',
+      message: '获取签到表s成功！',
       data: forms
     })
   },
@@ -366,7 +366,7 @@ const Api = {
   getCheckFormById: async (req, res)=>{
     let checkFormId = req.body.checkFormId
 
-    let checkForm = await Models.CheckForm.findById(checkFormId)
+    let checkForm = await Models.CheckForm.findById(checkFormId).sort({_id: -1})
     let group = await Models.Group.findById(checkForm.group_id)
 
     checkForm = JSON.parse(JSON.stringify(checkForm))
@@ -403,7 +403,7 @@ const Api = {
   getChecksByCheckFormId: async (req, res)=>{
     let checkFormId = req.body.checkFormId
 
-    let checks = await Models.Check.find({form_id: checkFormId})
+    let checks = await Models.Check.find({form_id: checkFormId}).sort({_id: -1})
 
     checks = JSON.parse(JSON.stringify(checks))
 
@@ -485,7 +485,7 @@ const Api = {
   getOneWordById: async (req, res)=>{
     let wordId = req.body.wordId
 
-    let oneWord = await Models.OneWord.findById(wordId)
+    let oneWord = await Models.OneWord.findById(wordId).sort({_id: -1})
 
     return res.json({
       result: true,
