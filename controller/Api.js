@@ -362,7 +362,9 @@ const Api = {
       else{
         let check = await Models.Check.findOne({form_id: form._id, user_id: userId})
         
-        form.checkStatus = check.status || 0
+        if(check){
+          form.checkStatus = check.status || 0
+        }
       }
     }
     
