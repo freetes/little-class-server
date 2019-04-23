@@ -284,10 +284,12 @@ const Api = {
     for(let log of logs){
       let groupInfo = await Models.Group.findById(log.group_id)
       let formCount = await Models.CheckForm.count({group_id: log.group_id})
+      let userCount = await Models.UserGroup.count({group_id: log.group_id})
       
       groupInfo = groupInfo.toObject()
       groupInfo.userLevel = log.level
       groupInfo.formCount = formCount
+      groupInfo.userCount = userCount
 
       groups.push(groupInfo)
     }
