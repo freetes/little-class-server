@@ -1,5 +1,4 @@
 const Models = require('../model/dataModel');
-const multiparty = require('multiparty');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
@@ -549,26 +548,19 @@ const Api = {
    * @createAt
    */
   createNote: async (req, res)=>{
-
-    var form = new multiparty.Form();
- 
-    form.parse(req, function(err, fields, files) {
-      console.log(fields)
-      console.log(files)
-      return res.json({
-        result: true,
-        message: '获取接口成功！',
-        data: {
-          fields,
-          files
-        }
-      })
-    });
-
     let userId = req.body.userId
 
     console.log(req.body)
     console.log(req.files)
+
+    return res.json({
+      result: true,
+      message: '发布笔记成功！',
+      data: {
+        body: req.body,
+        files: req.files
+      }
+    })
 
     let data = {
       user_id: userId,
@@ -583,13 +575,13 @@ const Api = {
       // position: req.body.position,
     }
 
-    // let oneWord = await Models.OneWord.create(data)
+    let oneWord = await Models.OneWord.create(data)
 
-    // return res.json({
-    //   result: true,
-    //   message: '发布一言成功！',
-    //   data: oneWord
-    // })
+    return res.json({
+      result: true,
+      message: '发布一言成功！',
+      data: oneWord
+    })
   },
 
   // POST /getOneWordById

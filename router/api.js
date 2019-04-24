@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const api = require('../controller/Api');
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
 
 /* GET api page. */
 
@@ -34,7 +36,7 @@ router.post('/getOneWordById', api.getOneWordById);
 router.post('/getOneWords', api.getOneWords);
 
 // Note
-router.post('/createNote', api.createNote);
+router.post('/createNote', multipartMiddleware, api.createNote);
 // router.post('/editNote', api.editNote);
 // router.post('/deleteNote', api.deleteNote);
 // router.post('/getAllNotes', api.getAllNotes);
