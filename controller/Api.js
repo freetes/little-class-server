@@ -1,4 +1,10 @@
 const Models = require('../model/dataModel');
+const multiparty = require('multiparty');
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+const publicPath = path.join(__dirname, '../public'),
+      updatePath = path.join(publicPath, '/file/update');
 
 // 处理主页的请求
 const Api = {
@@ -491,6 +497,99 @@ const Api = {
       message: '发布一言成功！',
       data: oneWord
     })
+  },
+
+  // POST /getOneWordById
+  /**
+   * @wordId
+   * @content
+   * @createAt
+   */
+  getOneWordById: async (req, res)=>{
+    let wordId = req.body.wordId
+
+    let oneWord = await Models.OneWord.findById(wordId).sort({_id: -1})
+
+    return res.json({
+      result: true,
+      message: '查询一言成功！',
+      data: oneWord
+    })
+  },
+
+  // POST /getOneWords
+  /**
+   * @page
+   * @limit
+   */
+  getOneWords: async (req, res)=>{
+    let page = req.body.page || 1, limit = req.body.limit || 20
+
+    let oneWords = await Models.OneWord.find({})
+                        .sort({_id: -1})
+                        .skip((page-1)*limit)
+                        .limit(20)
+
+    return res.json({
+      result: true,
+      message: '获取一言成功！',
+      data: oneWords
+    })
+  },
+
+  // POST /createNote
+  /**
+   * @userId
+   * @title
+   * @subtitle
+   * @content
+   * @file
+   * @visible
+   * @tags
+   * @createAt
+   */
+  createNote: async (req, res)=>{
+
+    var form = new multiparty.Form();
+ 
+    form.parse(req, function(err, fields, files) {
+      console.log(fields)
+      console.log(files)
+      return res.json({
+        result: true,
+        message: '获取接口成功！',
+        data: {
+          fields,
+          files
+        }
+      })
+    });
+
+    let userId = req.body.userId
+
+    console.log(req.body)
+    console.log(req.files)
+
+    let data = {
+      user_id: userId,
+      title: req.body.title,
+      subtitle: req.body.subtitle,
+      content: req.body.content,
+      content: req.body.content,
+      content: req.body.content,
+      content: req.body.content,
+      
+      create_at: Date.now()
+      // position: req.body.position,
+    }
+
+    // let oneWord = await Models.OneWord.create(data)
+
+    // return res.json({
+    //   result: true,
+    //   message: '发布一言成功！',
+    //   data: oneWord
+    // })
   },
 
   // POST /getOneWordById

@@ -33,6 +33,16 @@ router.post('/createOneWord', api.createOneWord);
 router.post('/getOneWordById', api.getOneWordById);
 router.post('/getOneWords', api.getOneWords);
 
+// Note
+router.post('/createNote', api.createNote);
+// router.post('/editNote', api.editNote);
+// router.post('/deleteNote', api.deleteNote);
+// router.post('/getAllNotes', api.getAllNotes);
+// router.post('/getNodeById', api.getNodeById);
+// router.post('/getNodesByUserId', api.getNodesByUserId);
+// router.post('/createComment', api.createComment);
+
+
 // 集成
 // router.post('/', api)
 
