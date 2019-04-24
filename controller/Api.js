@@ -542,7 +542,6 @@ const Api = {
    * @title
    * @subtitle
    * @content
-   * @file
    * @visible
    * @tags
    */
