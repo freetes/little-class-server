@@ -554,8 +554,8 @@ const Api = {
       title: req.body.title,
       subtitle: req.body.subtitle,
       content: req.body.content,
-      visible: req.body.visible,
-      tags: req.body.tags,
+      visible: JSON.parse(req.body.visible),
+      tags: JSON.parse(req.body.tags),
       
       create_at: Date.now()
     }
