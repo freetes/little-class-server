@@ -547,7 +547,11 @@ const Api = {
    * @tags
    */
   createNote: async (req, res)=>{
-    let userId = req.body.userId, file = req.files.file || {}
+    let userId = req.body.userId, file = {}
+    
+    if(req.files && req.files.file){
+      file = req.files.file
+    }
 
     let data = {
       user_id: userId,
