@@ -3,7 +3,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const publicPath = path.join(__dirname, '../public'),
-      updatePath = path.join(publicPath, '/file/update');
+      filePath = path.join(publicPath, '/file/');
 
 // 处理主页的请求
 const Api = {
@@ -545,42 +545,34 @@ const Api = {
    * @file
    * @visible
    * @tags
-   * @createAt
    */
   createNote: async (req, res)=>{
-    let userId = req.body.userId
-
-    console.log(req.body)
-    console.log(req.files)
-
-    return res.json({
-      result: true,
-      message: '发布笔记成功！',
-      data: {
-        body: req.body,
-        files: req.files
-      }
-    })
+    let userId = req.body.userId, file = req.files.file
 
     let data = {
       user_id: userId,
       title: req.body.title,
       subtitle: req.body.subtitle,
       content: req.body.content,
-      content: req.body.content,
-      content: req.body.content,
-      content: req.body.content,
+      visible: req.body.visible,
+      tags: req.body.tags,
       
       create_at: Date.now()
-      // position: req.body.position,
     }
 
-    let oneWord = await Models.OneWord.create(data)
+    let note = await Models.Note.create(data)
+
+    // 操作图片
+    if(file.size){
+      let fileName = note._id + file.path.split('.')[1]
+      fs.renameSync(req.files.file.path, filePath + fileName)
+      note = await Models.Note.findByIdAndUpdate(note._id, {filePath: '/file/' + fileName})
+    }
 
     return res.json({
       result: true,
-      message: '发布一言成功！',
-      data: oneWord
+      message: '发布笔记成功！',
+      data: note
     })
   },
 

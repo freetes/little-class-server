@@ -11,10 +11,7 @@ const NoteSchema = new Schema({
 
   position: String,
 
-  file: {
-    name: String,
-    path: String,
-  },
+  filePath: String,
 
   // 私密性
   visible: {

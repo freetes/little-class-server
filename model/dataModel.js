@@ -3,7 +3,8 @@ const User = require('./User'),
       CheckForm = require('./CheckForm'),
       Check = require('./Check'),
       UserGroup = require('./User-Group'),
-      OneWord = require('./OneWord')
+      OneWord = require('./OneWord'),
+      Note = require('./Note')
 
 const Models = {
   User,
@@ -11,7 +12,8 @@ const Models = {
   Check,
   CheckForm,
   UserGroup,
-  OneWord
+  OneWord,
+  Note
 }
 
 module.exports = Models;
