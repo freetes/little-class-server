@@ -547,7 +547,7 @@ const Api = {
    * @tags
    */
   createNote: async (req, res)=>{
-    let userId = req.body.userId, file = req.files.file
+    let userId = req.body.userId, file = req.files.file || {}
 
     let data = {
       user_id: userId,
@@ -564,7 +564,7 @@ const Api = {
 
     // 操作图片
     if(file.size){
-      let fileName = note._id + file.path.split('.')[1]
+      let fileName = note._id + '.' + file.path.split('.')[1]
       fs.renameSync(req.files.file.path, filePath + fileName)
       note = await Models.Note.findByIdAndUpdate(note._id, {filePath: '/file/' + fileName})
     }
