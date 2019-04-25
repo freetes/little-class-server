@@ -710,8 +710,8 @@ const Api = {
       note_id: noteId,
       user_id: userId,
 
-      feeling: String,
-      content: String,
+      feeling: req.body.feeling,
+      content: req.body.content,
 
       createAt: Date.now()
     }
