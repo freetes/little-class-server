@@ -750,6 +750,15 @@ const Api = {
 
     let comments = await Models.NoteComment.find({note_id: noteId})
 
+    comments = JSON.parse(JSON.stringify(comments))
+
+    for(let item of comments){
+      let user = await Models.User.findById(item.user_id)
+
+      item.userName = user.name
+      item.avatarUrl = user.wxInfo.avatarUrl     
+    }
+
     return res.json({
       result: true,
       message: '根据笔记id获取笔记评论成功！',
