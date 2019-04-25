@@ -39,9 +39,9 @@ router.post('/getOneWords', api.getOneWords);
 router.post('/createNote', multipartMiddleware, api.createNote);
 // router.post('/editNote', api.editNote);
 // router.post('/deleteNote', api.deleteNote);
-// router.post('/getAllNotes', api.getAllNotes);
-// router.post('/getNodeById', api.getNodeById);
-// router.post('/getNodesByUserId', api.getNodesByUserId);
+router.post('/getAllNotes', api.getAllNotes);
+router.post('/getNoteById', api.getNoteById);
+router.post('/getNotesByUserId', api.getNotesByUserId);
 // router.post('/createComment', api.createComment);
 
 

@@ -579,41 +579,62 @@ const Api = {
     })
   },
 
-  // POST /getOneWordById
+  // POST /getNotesByUserId
   /**
-   * @wordId
-   * @content
-   * @createAt
+   * @userId
+   * @page
+   * @limit
    */
-  getOneWordById: async (req, res)=>{
-    let wordId = req.body.wordId
+  getNotesByUserId: async (req, res)=>{
+    let userId = req.body.userId, 
+        page = req.body.page || 1, 
+        limit = req.body.limit || 20;
 
-    let oneWord = await Models.OneWord.findById(wordId).sort({_id: -1})
+    let notes = await Models.Note.find({user_id: userId})
+                      .sort({_id: -1})
+                      .skip((page-1)*limit)
+                      .limit(20)
 
     return res.json({
       result: true,
-      message: '查询一言成功！',
-      data: oneWord
+      message: '根据用户名查询笔记成功！',
+      data: notes
     })
   },
 
-  // POST /getOneWords
+  // POST /getNoteById
+  /**
+   * @noteId
+   */
+  getNoteById: async (req, res)=>{
+    let noteId = req.body.noteId
+
+    let note = await Models.Note.findById(noteId)
+
+    return res.json({
+      result: true,
+      message: '根据id获取笔记成功！',
+      data: note
+    })
+  },
+
+  // POST /getAllNotes
   /**
    * @page
    * @limit
    */
-  getOneWords: async (req, res)=>{
+  getAllNotes: async (req, res)=>{
     let page = req.body.page || 1, limit = req.body.limit || 20
 
-    let oneWords = await Models.OneWord.find({})
-                        .sort({_id: -1})
-                        .skip((page-1)*limit)
-                        .limit(20)
+    let notes = await Models.Note.find({visible: true})
+                      .sort({_id: -1})
+                      .skip((page-1)*limit)
+                      .limit(20)
 
     return res.json({
       result: true,
-      message: '获取一言成功！',
-      data: oneWords
+      message: '获取公开笔记成功！',
+      data: notes
     })
   },
 };
