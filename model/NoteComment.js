@@ -17,7 +17,6 @@ const NoteCommentSchema = new Schema({
    * @eyes 👀
    */
   content: String,
-  position: String,
 
   create_at: Date,
 });

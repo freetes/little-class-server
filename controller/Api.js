@@ -579,6 +579,86 @@ const Api = {
     })
   },
 
+  // POST /editNote
+  /**
+   * @noteId
+   * @title
+   * @subtitle
+   * @content
+   * @visible
+   * @tags
+   */
+  editNote: async (req, res)=>{
+    let noteId = req.body.noteId, file = {}
+    
+    if(req.files && req.files.file){
+      file = req.files.file
+    }
+
+    let data = {
+      user_id: userId,
+      title: req.body.title,
+      subtitle: req.body.subtitle,
+      content: req.body.content,
+      visible: JSON.parse(req.body.visible),
+      tags: JSON.parse(req.body.tags),
+      
+      update_at: Date.now()
+    }
+
+    // 操作图片
+    if(file.size){
+      let fileName = note._id + '.' + file.path.split('.')[1]
+      fs.renameSync(req.files.file.path, filePath + fileName)
+
+      data.filePath = '/file/' + fileName
+    }
+    
+    note = await Models.Note.findByIdAndUpdate(noteId, data)
+
+    return res.json({
+      result: true,
+      message: '更新笔记成功！',
+      data: note
+    })
+  },
+
+  // POST /deleteNote
+  /**
+   * @noteId
+   */
+  deleteNote: async (req, res)=>{
+    let noteId = req.body.noteId
+
+    let note = await Models.Note.findByIdAndDelete(noteId)
+
+    return res.json({
+      result: true,
+      message: '删除笔记成功！',
+      data: note
+    })
+  },
+
+  // POST /getAllNotes
+  /**
+   * @page
+   * @limit
+   */
+  getAllNotes: async (req, res)=>{
+    let page = req.body.page || 1, limit = req.body.limit || 20
+
+    let notes = await Models.Note.find({visible: true})
+                      .sort({_id: -1})
+                      .skip((page-1)*limit)
+                      .limit(20)
+
+    return res.json({
+      result: true,
+      message: '获取公开笔记成功！',
+      data: notes
+    })
+  },
+
   // POST /getNotesByUserId
   /**
    * @userId
@@ -618,23 +698,62 @@ const Api = {
     })
   },
 
-  // POST /getAllNotes
+  // POST /createComment
   /**
-   * @page
-   * @limit
+   * @nodeId
+   * @userId
    */
-  getAllNotes: async (req, res)=>{
-    let page = req.body.page || 1, limit = req.body.limit || 20
+  createComment: async (req, res)=>{
+    let userId = req.body.userId, noteId = req.body.noteId
 
-    let notes = await Models.Note.find({visible: true})
-                      .sort({_id: -1})
-                      .skip((page-1)*limit)
-                      .limit(20)
+    let data = {
+      note_id: noteId,
+      user_id: userId,
+
+      feeling: String,
+      content: String,
+
+      createAt: Date.now()
+    }
+
+    let noteComment = await Models.NoteComment.create(data)
 
     return res.json({
       result: true,
-      message: '获取公开笔记成功！',
-      data: notes
+      message: '新增笔记评论成功！',
+      data: noteComment
+    })
+  },
+
+  // POST /deleteComment
+  /**
+   * @commentId
+   */
+  deleteComment: async (req, res)=>{
+    let commentId = req.body.commentId
+
+    let noteComment = await Models.NoteComment.findByIdAndDelete(commentId)
+
+    return res.json({
+      result: true,
+      message: '删除笔记评论成功！',
+      data: noteComment
+    })
+  },
+
+  // POST /getCommentsByNoteId
+  /**
+   * @noteId
+   */
+  getCommentsByNoteId: async (req, res)=>{
+    let noteId = req.body.noteId
+
+    let comments = await Models.NoteComment.find({note_id: noteId})
+
+    return res.json({
+      result: true,
+      message: '根据笔记id获取笔记评论成功！',
+      data: comments
     })
   },
 };

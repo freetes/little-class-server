@@ -3,8 +3,6 @@ const api = require('../controller/Api');
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart();
 
-/* GET api page. */
-
 // User
 router.post('/login', api.login);
 router.post('/getUserInfoById', api.getUserInfoById);
@@ -37,12 +35,16 @@ router.post('/getOneWords', api.getOneWords);
 
 // Note
 router.post('/createNote', multipartMiddleware, api.createNote);
-// router.post('/editNote', api.editNote);
-// router.post('/deleteNote', api.deleteNote);
+router.post('/editNote', multipartMiddleware, api.editNote);
+router.post('/deleteNote', api.deleteNote);
 router.post('/getAllNotes', api.getAllNotes);
 router.post('/getNoteById', api.getNoteById);
 router.post('/getNotesByUserId', api.getNotesByUserId);
-// router.post('/createComment', api.createComment);
+
+// NoteComment
+router.post('/createComment', api.createComment);
+router.post('/deleteComment', api.deleteComment);
+router.post('/getCommentsByNoteId', api.getCommentsByNoteId);
 
 
 // 集成
