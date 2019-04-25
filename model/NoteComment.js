@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // 笔记评论模式
 const NoteCommentSchema = new Schema({
-  node_id: String,
+  note_id: String,
   user_id: String,
 
   feeling: String,
@@ -13,7 +13,6 @@ const NoteCommentSchema = new Schema({
    * @good 👍
    * @bad 👎
    * @hooray 🎉
-   * @love ❤️
    * @eyes 👀
    */
   content: String,
