@@ -540,7 +540,6 @@ const Api = {
   /**
    * @userId
    * @title
-   * @subtitle
    * @content
    * @visible
    * @tags
@@ -555,7 +554,6 @@ const Api = {
     let data = {
       user_id: userId,
       title: req.body.title,
-      subtitle: req.body.subtitle,
       content: req.body.content,
       visible: JSON.parse(req.body.visible),
       tags: JSON.parse(req.body.tags),
@@ -583,7 +581,6 @@ const Api = {
   /**
    * @noteId
    * @title
-   * @subtitle
    * @content
    * @visible
    * @tags
@@ -598,7 +595,6 @@ const Api = {
     let data = {
       user_id: userId,
       title: req.body.title,
-      subtitle: req.body.subtitle,
       content: req.body.content,
       visible: JSON.parse(req.body.visible),
       tags: JSON.parse(req.body.tags),

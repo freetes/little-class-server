@@ -6,7 +6,6 @@ const NoteSchema = new Schema({
   user_id: String,
 
   title: String,
-  subtitle: String,
   content: String,
 
   position: String,
