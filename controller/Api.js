@@ -108,6 +108,7 @@ const Api = {
 
       user = JSON.parse(JSON.stringify(user))
       user.userLevel = log.level
+      user.nickname = log.nickname
       
       users.push(user)
     }
@@ -126,7 +127,10 @@ const Api = {
    * @userId
    */
   createGroup: async (req, res)=>{
+    let userId = req.body.userId
+
     let groupCode = await Models.Group.count({})
+    let user = await Models.User.findById(userId)
 
     // 新建群组
     let newGroup = await Models.Group.create({
@@ -140,10 +144,12 @@ const Api = {
 
     // 新建群组-用户
     await Models.UserGroup.create({
-      user_id: req.body.userId,
+      user_id: userId,
       group_id: newGroup._id,
       level: 1,
       join_at: Date.now(),
+
+      nickname: user.name
     })
 
     return res.json({
@@ -220,15 +226,18 @@ const Api = {
    * @groupId
    */
   joinGroup: async (req, res)=>{
-    // 查询群组
-    // let groupInfo = await Models.Group.findById(req.body.groupId)
+    let userId = req.body.userId
+
+    let user = await Models.User.findById(userId)
 
     // 新建群组-用户
     let userGroupInfo = await Models.UserGroup.create({
-      user_id: req.body.userId,
+      user_id: userId,
       group_id: req.body.groupId,
       level: 0,
       join_at: Date.now(),
+
+      nickname: user.name
     })
 
     return res.json({
@@ -268,7 +277,7 @@ const Api = {
     await Models.Group.findByIdAndUpdate(groupId, {status: -2, update_at: Date.now()})
 
     // 删除群组-用户
-    await Models.UserGroup.findOneAndRemove({group_id: groupId})
+    await Models.UserGroup.remove({group_id: groupId})
 
     return res.json({
       result: true,
