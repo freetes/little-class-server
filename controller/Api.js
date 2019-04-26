@@ -688,6 +688,9 @@ const Api = {
 
     let note = await Models.Note.findById(noteId)
 
+    // 更新浏览次数
+    note = await Models.Note.findByIdAndUpdate(noteId, {view_count: note.view_count+1})
+
     return res.json({
       result: true,
       message: '根据id获取笔记成功！',
