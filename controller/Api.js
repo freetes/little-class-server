@@ -247,6 +247,27 @@ const Api = {
     })
   },
 
+  // POST /editUserGroupInfo
+  /**
+   * @userId
+   * @groupId
+   * @nickname
+   */
+  editUserGroupInfo: async (req, res)=>{
+    let userId = req.body.userId, groupId = req.body.groupId
+
+    let userGroupInfo = await Models.UserGroup.findOneAndUpdate(
+      {user_id: userId, group_id: groupId}, 
+      {nickname: req.body.nickname}
+    )
+
+    return res.json({
+      result: true,
+      message: '编辑用户群组信息成功！',
+      data: userGroupInfo
+    })
+  },
+
   // POST /exitGroup
   /**
    * @groupId

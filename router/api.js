@@ -16,6 +16,7 @@ router.post('/searchGroupByCode', api.searchGroupByCode);
 router.post('/getGroupInfoById', api.getGroupInfoById);
 router.post('/getAllGroupsByUserId', api.getAllGroupsByUserId);
 router.post('/joinGroup', api.joinGroup);
+router.post('/editUserGroupInfo', api.editUserGroupInfo);
 router.post('/exitGroup', api.exitGroup);
 router.post('/disbandGroup', api.disbandGroup);
 
