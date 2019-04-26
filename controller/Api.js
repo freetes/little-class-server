@@ -558,6 +558,7 @@ const Api = {
       visible: JSON.parse(req.body.visible),
       tags: JSON.parse(req.body.tags),
       
+      view_count: 1,
       create_at: Date.now()
     }
 

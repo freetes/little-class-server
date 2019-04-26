@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// 一言数据模式
+// 笔记数据模式
 const NoteSchema = new Schema({
   user_id: String,
 
@@ -11,6 +11,12 @@ const NoteSchema = new Schema({
   position: String,
 
   filePath: String,
+
+  // 浏览次数
+  view_count: {
+    type: Number,
+    default: 1
+  },
 
   // 私密性
   visible: {
