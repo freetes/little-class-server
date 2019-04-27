@@ -3,7 +3,6 @@ const User = require('./User'),
       CheckForm = require('./CheckForm'),
       Check = require('./Check'),
       UserGroup = require('./User-Group'),
-      OneWord = require('./OneWord'),
       Note = require('./Note'),
       NoteComment = require('./NoteComment')
 
@@ -13,7 +12,6 @@ const Models = {
   Check,
   CheckForm,
   UserGroup,
-  OneWord,
   Note,
   NoteComment
 }

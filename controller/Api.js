@@ -434,6 +434,8 @@ const Api = {
       if(check){
         user.checkStatus = check.status
       }
+      user.nickname = log.nickname
+      user.userLevel = log.level
       
       checkForm.members.push(user)
     }
@@ -497,72 +499,6 @@ const Api = {
       result: true,
       message: '签到成功！',
       data: check
-    })
-  },
-
-  // POST /createOneWord
-  /**
-   * @userId
-   * @content
-   * @createAt
-   */
-  createOneWord: async (req, res)=>{
-    let userId = req.body.userId
-
-    let data = {
-      user_id: userId,
-      title: req.body.title,
-      subtitle: req.body.subtitle,
-      content: req.body.content,
-      
-      create_at: Date.now()
-      // position: req.body.position,
-    }
-
-    let oneWord = await Models.OneWord.create(data)
-
-    return res.json({
-      result: true,
-      message: '发布一言成功！',
-      data: oneWord
-    })
-  },
-
-  // POST /getOneWordById
-  /**
-   * @wordId
-   * @content
-   * @createAt
-   */
-  getOneWordById: async (req, res)=>{
-    let wordId = req.body.wordId
-
-    let oneWord = await Models.OneWord.findById(wordId).sort({_id: -1})
-
-    return res.json({
-      result: true,
-      message: '查询一言成功！',
-      data: oneWord
-    })
-  },
-
-  // POST /getOneWords
-  /**
-   * @page
-   * @limit
-   */
-  getOneWords: async (req, res)=>{
-    let page = req.body.page || 1, limit = req.body.limit || 20
-
-    let oneWords = await Models.OneWord.find({})
-                        .sort({_id: -1})
-                        .skip((page-1)*limit)
-                        .limit(20)
-
-    return res.json({
-      result: true,
-      message: '获取一言成功！',
-      data: oneWords
     })
   },
 

@@ -29,11 +29,6 @@ router.post('/getChecksByCheckFormId', api.getChecksByCheckFormId);
 // Check
 router.post('/createCheck', api.createCheck);
 
-// OneWord
-router.post('/createOneWord', api.createOneWord);
-router.post('/getOneWordById', api.getOneWordById);
-router.post('/getOneWords', api.getOneWords);
-
 // Note
 router.post('/createNote', multipartMiddleware, api.createNote);
 router.post('/editNote', multipartMiddleware, api.editNote);
