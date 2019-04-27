@@ -575,13 +575,14 @@ const Api = {
    * @tags
    */
   createNote: async (req, res)=>{
-    let userId = req.body.userId, file = {}
+    let userId = req.body.userId, groupId = req.body.groupId, file = {}
     
     if(req.files && req.files.file){
       file = req.files.file
     }
 
     let data = {
+      group_id: groupId,
       user_id: userId,
       title: req.body.title,
       content: req.body.content,
@@ -705,6 +706,29 @@ const Api = {
     return res.json({
       result: true,
       message: '根据用户名查询笔记成功！',
+      data: notes
+    })
+  },
+
+  // POST /getNotesByGroupId
+  /**
+   * @groupId
+   * @page
+   * @limit
+   */
+  getNotesByGroupId: async (req, res)=>{
+    let groupId = req.body.groupId, 
+        page = req.body.page || 1, 
+        limit = req.body.limit || 20;
+
+    let notes = await Models.Note.find({group_id: groupId})
+                      .sort({_id: -1})
+                      .skip((page-1)*limit)
+                      .limit(20)
+
+    return res.json({
+      result: true,
+      message: '根据群组ID查询笔记成功！',
       data: notes
     })
   },

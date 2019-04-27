@@ -41,6 +41,7 @@ router.post('/deleteNote', api.deleteNote);
 router.post('/getAllNotes', api.getAllNotes);
 router.post('/getNoteById', api.getNoteById);
 router.post('/getNotesByUserId', api.getNotesByUserId);
+router.post('/getNotesByGroupId', api.getNotesByGroupId);
 
 // NoteComment
 router.post('/createComment', api.createComment);

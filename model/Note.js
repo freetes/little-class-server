@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 // 笔记数据模式
 const NoteSchema = new Schema({
   user_id: String,
+  group_id: String,
 
   title: String,
   content: String,
