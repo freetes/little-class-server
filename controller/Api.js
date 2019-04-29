@@ -125,12 +125,17 @@ const Api = {
    * @groupName
    * @description
    * @userId
+   * @file
    */
   createGroup: async (req, res)=>{
     let userId = req.body.userId
-
+    
     let groupCode = await Models.Group.count({})
     let user = await Models.User.findById(userId)
+
+    if(req.files && req.files.file){
+      file = req.files.file
+    }
 
     // 新建群组
     let newGroup = await Models.Group.create({
@@ -141,6 +146,13 @@ const Api = {
       status: 0,
       code: groupCode + 10000
     })
+
+    // 操作图片
+    if(file.size){
+      let fileName = newGroup._id + '.' + file.path.split('.')[1]
+      fs.renameSync(req.files.file.path, filePath + fileName)
+      newGroup = await Models.Group.findByIdAndUpdate(newGroup._id, {filePath: '/file/' + fileName})
+    }
 
     // 新建群组-用户
     await Models.UserGroup.create({
@@ -167,7 +179,18 @@ const Api = {
   setGroupInfo: async (req, res)=>{
     let groupId = req.body.groupId
 
+    if(req.files && req.files.file){
+      file = req.files.file
+    }
+
     let group = await Models.Group.findByIdAndUpdate(groupId, req.body.groupInfo)
+
+    // 操作图片
+    if(file.size){
+      let fileName = groupId + '.' + file.path.split('.')[1]
+      fs.renameSync(req.files.file.path, filePath + fileName)
+      group = await Models.Group.findByIdAndUpdate(groupId, {filePath: '/file/' + fileName})
+    }
 
     return res.json({
       result: true,

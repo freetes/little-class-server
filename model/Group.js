@@ -5,10 +5,12 @@ const Schema = mongoose.Schema;
 const GroupSchema = new Schema({
   name: String,
   description: String,
-  create_at: Date,
-  update_at: Date,
   status: Number,
   code: Number,
+  filePath: String,
+
+  create_at: Date,
+  update_at: Date,
 });
 
 //数据模型

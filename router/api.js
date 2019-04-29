@@ -10,8 +10,8 @@ router.post('/setUserInfo', api.setUserInfo);
 router.post('/getUsersByGroupId', api.getUsersByGroupId);
 
 // Group
-router.post('/createGroup', api.createGroup);
-router.post('/setGroupInfo', api.setGroupInfo);
+router.post('/createGroup', multipartMiddleware, api.createGroup);
+router.post('/setGroupInfo', multipartMiddleware, api.setGroupInfo);
 router.post('/searchGroupByCode', api.searchGroupByCode);
 router.post('/getGroupInfoById', api.getGroupInfoById);
 router.post('/getAllGroupsByUserId', api.getAllGroupsByUserId);
