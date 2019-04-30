@@ -8,7 +8,13 @@ const UserGroupSchema = new Schema({
   level: Number,
   join_at: Date,
 
-  // 群信息： * 待完善
+  // 浏览次数
+  view_count: {
+    type: Number,
+    default: 1
+  },
+
+  // 群信息
   nickname: String,   // 群昵称
 });
 

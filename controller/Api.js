@@ -229,6 +229,9 @@ const Api = {
 
     if(userId){
       let log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
+
+      // 更新浏览次数
+      log = await Models.UserGroup.findByIdAndUpdate(log._id, {view_count: log.view_count+1})
       
       if(log){
         groupInfo = groupInfo.toObject()
@@ -337,7 +340,7 @@ const Api = {
   getAllGroupsByUserId: async (req, res)=>{
     let userId = req.body.userId
 
-    let logs = await Models.UserGroup.find({user_id: userId}).sort({_id: -1})
+    let logs = await Models.UserGroup.find({user_id: userId}).sort({view_count: -1})
 
     let groups = []
 
