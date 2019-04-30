@@ -128,7 +128,7 @@ const Api = {
    * @file
    */
   createGroup: async (req, res)=>{
-    let userId = req.body.userId
+    let userId = req.body.userId, file = {}
     
     let groupCode = await Models.Group.count({})
     let user = await Models.User.findById(userId)
@@ -177,7 +177,7 @@ const Api = {
    * @groupId
    */
   setGroupInfo: async (req, res)=>{
-    let groupId = req.body.groupId
+    let groupId = req.body.groupId, file = {}
 
     if(req.files && req.files.file){
       file = req.files.file
