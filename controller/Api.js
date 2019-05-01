@@ -787,6 +787,88 @@ const Api = {
       data: comments
     })
   },
+
+  // POST /createNotice
+  /**
+   * @userId
+   * @groupId
+   * @title
+   * @content
+   */
+  createNotice: async (req, res)=>{
+    let userId = req.body.userId, groupId = req.body.groupId
+    
+    let data = {
+      group_id: groupId,
+      user_id: userId,
+      title: req.body.title,
+      content: req.body.content,
+      
+      view_count: 1,
+      create_at: Date.now()
+    }
+
+    let notice = await Models.Notice.create(data)
+
+    return res.json({
+      result: true,
+      message: '发布通知成功！',
+      data: notice
+    })
+  },
+
+  // POST /deleteNotice
+  /**
+   * @noticeId
+   */
+  deleteNotice: async (req, res)=>{
+    let noticeId = req.body.noticeId
+
+    let notice = await Models.Notice.findByIdAndDelete(noticeId)
+
+    return res.json({
+      result: true,
+      message: '删除通知成功！',
+      data: notice
+    })
+  },
+
+  // POST /getNoticeById
+  /**
+   * @noticeId
+   */
+  getNoticeById: async (req, res)=>{
+    let noticeId = req.body.noticeId
+
+    let notice = await Models.Notice.findById(noticeId)
+
+    // 更新浏览次数
+    notice = await Models.Notice.findByIdAndUpdate(noticeId, {view_count: notice.view_count+1})
+
+    return res.json({
+      result: true,
+      message: '获取通知成功！',
+      data: notice
+    })
+  },
+
+  // POST /getNoticesByGroupId
+  /**
+   * @groupId
+   */
+  getNoticesByGroupId: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let notices = await Models.Notice.find({group_id: groupId})
+                      .sort({view_count: -1})
+
+    return res.json({
+      result: true,
+      message: '获取通知s成功！',
+      data: notices
+    })
+  },
+
 };
 
 module.exports = Api;

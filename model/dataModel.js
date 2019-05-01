@@ -4,6 +4,7 @@ const User = require('./User'),
       Check = require('./Check'),
       UserGroup = require('./User-Group'),
       Note = require('./Note'),
+      Notice = require('./Notice'),
       NoteComment = require('./NoteComment')
 
 const Models = {
@@ -13,7 +14,8 @@ const Models = {
   CheckForm,
   UserGroup,
   Note,
-  NoteComment
+  NoteComment,
+  Notice
 }
 
 module.exports = Models;

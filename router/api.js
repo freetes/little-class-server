@@ -43,6 +43,13 @@ router.post('/createComment', api.createComment);
 router.post('/deleteComment', api.deleteComment);
 router.post('/getCommentsByNoteId', api.getCommentsByNoteId);
 
+// Notice
+router.post('/createNotice', api.createNotice);
+router.post('/deleteNotice', api.deleteNotice);
+router.post('/getNoticeById', api.getNoticeById);
+router.post('/getNoticesByGroupId', api.getNoticesByGroupId);
+
+
 // 集成
 // router.post('/', api)
 
