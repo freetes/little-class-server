@@ -939,12 +939,36 @@ const Api = {
   // POST /getOneWordsByGroupId
   /**
    * @param groupId
+   * @param userId
    * @param time
+   * @param count
    */
   getOneWordsByGroupId: async (req, res)=>{
-    let groupId = req.body.groupId, time = new Date(req.body.time)
+    let groupId = req.body.groupId, time = null, userId = null, count = 0
 
-    let oneWords = await Models.OneWord.find({group_id: groupId, create_at: {$gte: time}})
+    if(req.body.time){
+      time = new Date(req.body.time)
+    }
+    if(req.body.userId){
+      userId = userId
+    }
+    if(req.body.count){
+      count = count
+    }
+
+    // 获取弹幕
+    let oneWords = await Models.OneWord.find(
+      {
+        group_id: groupId,
+        user_id: {$ne: userId},
+        create_at: {$gte: time},
+      }).skip(count)
+    
+    // 获取弹幕总数
+    let amount = await Models.OneWord.countDocuments({group_id: groupId})
+
+    oneWords = JSON.parse(JSON.stringify(oneWords))
+    oneWords.amount = amount
 
     return res.json({
       result: true,
