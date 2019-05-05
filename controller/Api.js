@@ -863,6 +863,12 @@ const Api = {
     // 更新浏览次数
     notice = await Models.Notice.findByIdAndUpdate(noticeId, {view_count: notice.view_count+1})
 
+    // 获取发布者信息
+    creater = await Models.User.findById(notice.user_id)
+    
+    notice = JSON.parse(JSON.stringify(notice))
+    notice.creater = creater
+
     return res.json({
       result: true,
       message: '获取通知成功！',
