@@ -4,11 +4,14 @@ const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
 const home = require('./router/home');
 const api = require('./router/api');
 
 const app = express();
+ 
+app.use(cors())
 
 app.disable('x-powered-by');
 
