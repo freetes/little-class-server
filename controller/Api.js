@@ -333,6 +333,24 @@ const Api = {
     })
   },
 
+  // POST /isGroupCreater
+  /**
+   * @param groupId
+   * @param userId
+   */
+  isGroupCreater: async (req, res)=>{
+    let groupId = req.body.groupId, userId = req.body.userId
+
+    // 修改群组状态
+    let log = await Models.UserGroup.findOne(groupId, {level: 1, group_id: groupId, user_id: userId})
+
+    return res.json({
+      result: true,
+      message: '查询成功！',
+      data: !!log
+    })
+  },
+
   // POST /getAllGroupsByUserId
   /**
    * @userId

@@ -19,6 +19,7 @@ router.post('/joinGroup', api.joinGroup);
 router.post('/editUserGroupInfo', api.editUserGroupInfo);
 router.post('/exitGroup', api.exitGroup);
 router.post('/disbandGroup', api.disbandGroup);
+router.post('/isGroupCreater', api.disbandGroup);
 
 // CheckForm
 router.post('/createCheckForm', api.createCheckForm);
