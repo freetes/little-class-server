@@ -962,13 +962,9 @@ const Api = {
         group_id: groupId,
         user_id: {$ne: userId},
         create_at: {$gte: time},
-      }).skip(count)
+      })
     
     // 获取弹幕总数
-    let amount = await Models.OneWord.countDocuments({group_id: groupId})
-
-    oneWords = JSON.parse(JSON.stringify(oneWords))
-    oneWords.amount = amount
 
     return res.json({
       result: true,
