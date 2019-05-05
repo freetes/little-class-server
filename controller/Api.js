@@ -939,11 +939,12 @@ const Api = {
   // POST /getOneWordsByGroupId
   /**
    * @param groupId
+   * @param time
    */
   getOneWordsByGroupId: async (req, res)=>{
-    let groupId = req.body.groupId, now = new Date()
+    let groupId = req.body.groupId, time = new Date(req.body.time)
 
-    let oneWords = await Models.OneWord.find({group_id: groupId, create_at: {$gte: now}})
+    let oneWords = await Models.OneWord.find({group_id: groupId, create_at: {$gte: time}})
 
     return res.json({
       result: true,
