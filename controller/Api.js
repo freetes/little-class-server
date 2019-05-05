@@ -230,10 +230,10 @@ const Api = {
     if(userId){
       let log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
 
-      // 更新浏览次数
-      log = await Models.UserGroup.findByIdAndUpdate(log._id, {view_count: log.view_count+1})
-      
       if(log){
+        // 更新浏览次数
+        log = await Models.UserGroup.findByIdAndUpdate(log._id, {view_count: log.view_count+1})
+
         groupInfo =  JSON.parse(JSON.stringify(groupInfo))
         groupInfo.userLevel = log.level
       }
@@ -434,26 +434,28 @@ const Api = {
 
     forms = JSON.parse(JSON.stringify(forms))
 
-    for(let form of forms){
-      let user = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
+    let user = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
+    
+    if(user){
+      for(let form of forms){
 
-      if(user.level == 1){
-        let successCount = await Models.Check.count({form_id: form._id, status: 1})
-        let failCount = await Models.Check.count({form_id: form._id, status: -1})
-  
-        form.successCount = successCount
-        form.failCount = failCount
-      }
-      else{
-        let check = await Models.Check.findOne({form_id: form._id, user_id: userId})
-        
-        if(check){
-          form.checkStatus = check.status || 0
+        if(user.level == 1){
+          let successCount = await Models.Check.count({form_id: form._id, status: 1})
+          let failCount = await Models.Check.count({form_id: form._id, status: -1})
+    
+          form.successCount = successCount
+          form.failCount = failCount
+        }
+        else{
+          let check = await Models.Check.findOne({form_id: form._id, user_id: userId})
+          
+          if(check){
+            form.checkStatus = check.status || 0
+          }
         }
       }
     }
     
-
     return res.json({
       result: true,
       message: '获取签到表s成功！',
