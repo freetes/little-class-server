@@ -884,7 +884,7 @@ const Api = {
     let groupId = req.body.groupId
 
     let notices = await Models.Notice.find({group_id: groupId})
-                      .sort({view_count: -1})
+                      .sort({_id: -1})
 
     return res.json({
       result: true,
