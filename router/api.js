@@ -50,7 +50,6 @@ router.post('/deleteNotice', api.deleteNotice);
 router.post('/getNoticeById', api.getNoticeById);
 router.post('/getNoticesByGroupId', api.getNoticesByGroupId);
 
-
 // 集成
 // router.post('/', api)
 

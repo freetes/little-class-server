@@ -342,7 +342,7 @@ const Api = {
     let groupId = req.body.groupId, userId = req.body.userId
 
     // 修改群组状态
-    let log = await Models.UserGroup.findOne(groupId, {level: 1, group_id: groupId, user_id: userId})
+    let log = await Models.UserGroup.findOne({level: 1, group_id: groupId, user_id: userId})
 
     return res.json({
       result: true,
