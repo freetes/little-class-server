@@ -234,7 +234,7 @@ const Api = {
       log = await Models.UserGroup.findByIdAndUpdate(log._id, {view_count: log.view_count+1})
       
       if(log){
-        groupInfo = groupInfo.toObject()
+        groupInfo =  JSON.parse(JSON.stringify(groupInfo))
         groupInfo.userLevel = log.level
       }
     }
