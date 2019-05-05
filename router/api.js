@@ -50,6 +50,12 @@ router.post('/deleteNotice', api.deleteNotice);
 router.post('/getNoticeById', api.getNoticeById);
 router.post('/getNoticesByGroupId', api.getNoticesByGroupId);
 
+// OneWord
+router.post('/createOneWord', api.createOneWord);
+router.post('/deleteOneWord', api.deleteOneWord);
+// router.post('/getOneWordById', api.getOneWordById);
+router.post('/getOneWordsByGroupId', api.getOneWordsByGroupId);
+
 // 集成
 // router.post('/', api)
 

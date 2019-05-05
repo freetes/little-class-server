@@ -894,6 +894,64 @@ const Api = {
     })
   },
 
+  // POST /createOneWord
+  /**
+   * @userId
+   * @groupId
+   * @content
+   */
+  createOneWord: async (req, res)=>{
+    let userId = req.body.userId, groupId = req.body.groupId
+    
+    let data = {
+      group_id: groupId,
+      user_id: userId,
+      content: req.body.content,
+      
+      create_at: Date.now()
+    }
+
+    let oneWord = await Models.OneWord.create(data)
+
+    return res.json({
+      result: true,
+      message: '发送弹幕成功！',
+      data: oneWord
+    })
+  },
+
+  // POST /deleteOneWord
+  /**
+   * @oneWordId
+   */
+  deleteOneWord: async (req, res)=>{
+    let oneWordId = req.body.oneWordId
+
+    let oneWord = await Models.OneWord.findByIdAndDelete(oneWordId)
+
+    return res.json({
+      result: true,
+      message: '删除弹幕成功！',
+      data: oneWord
+    })
+  },
+
+  // POST /getOneWordsByGroupId
+  /**
+   * @param groupId
+   */
+  getOneWordsByGroupId: async (req, res)=>{
+    let groupId = req.body.groupId, now = new Date()
+
+    let oneWords = await Models.OneWord.find({group_id: groupId, create_at: {$gte: now}})
+
+    return res.json({
+      result: true,
+      message: '获取弹幕s成功！',
+      data: oneWords
+    })
+  },
+
 };
 
 module.exports = Api;
