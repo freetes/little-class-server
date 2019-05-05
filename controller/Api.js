@@ -944,16 +944,13 @@ const Api = {
    * @param count
    */
   getOneWordsByGroupId: async (req, res)=>{
-    let groupId = req.body.groupId, time = null, userId = null, count = 0
+    let groupId = req.body.groupId, time = null, userId = null
 
     if(req.body.time){
       time = new Date(req.body.time)
     }
     if(req.body.userId){
-      userId = userId
-    }
-    if(req.body.count){
-      count = count
+      userId = req.body.userId
     }
 
     // 获取弹幕
