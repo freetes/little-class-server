@@ -8,6 +8,7 @@ const Home = {
   },
   // GET /test
   test: (req, res)=>{
+    res.header('Access-Control-Allow-Origin', '*');
 
     return res.json({
       result: true,
