@@ -218,26 +218,21 @@ const Api = {
   // POST /getGroupInfoById
   /**
    * @groupId
-   * @userId
    */
   getGroupInfoById: async (req, res)=>{
 
-    let groupId = req.body.groupId, userId = req.body.userId
+    let groupId = req.body.groupId
 
     // 查询群组
     let groupInfo = await Models.Group.findById(groupId)
+    
+    // 获取创建者信息
+    let log = await Models.UserGroup.findOne({group_id: groupId, level: 1})
+    let creater = await Models.User.findById(log.user_id)
 
-    if(userId){
-      let log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
+    groupInfo = JSON.parse(JSON.stringify(groupInfo))
 
-      if(log){
-        // 更新浏览次数
-        log = await Models.UserGroup.findByIdAndUpdate(log._id, {view_count: log.view_count+1})
-
-        groupInfo =  JSON.parse(JSON.stringify(groupInfo))
-        groupInfo.userLevel = log.level
-      }
-    }
+    groupInfo.creater = creater
 
     return res.json({
       result: true,
@@ -333,21 +328,20 @@ const Api = {
     })
   },
 
-  // POST /isGroupCreater
+  // POST /getUserLevel
   /**
    * @param groupId
    * @param userId
    */
-  isGroupCreater: async (req, res)=>{
+  getUserLevel: async (req, res)=>{
     let groupId = req.body.groupId, userId = req.body.userId
-
-    // 修改群组状态
-    let log = await Models.UserGroup.findOne({level: 1, group_id: groupId, user_id: userId})
+    
+    let log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
 
     return res.json({
       result: true,
-      message: '查询成功！',
-      data: !!log
+      message: '查询用户级别成功！',
+      data: log.userLevel || -1
     })
   },
 
@@ -733,6 +727,11 @@ const Api = {
     // 更新浏览次数
     note = await Models.Note.findByIdAndUpdate(noteId, {view_count: note.view_count+1})
 
+    note = JSON.parse(JSON.stringify(note))
+
+    let creater = await Models.User.findById(note.user_id)
+    note.creater = creater
+    
     return res.json({
       result: true,
       message: '根据id获取笔记成功！',
@@ -961,7 +960,11 @@ const Api = {
         create_at: {$gte: time},
       })
     
-    // 获取弹幕总数
+    // 获取创建者信息
+    oneWords = JSON.parse(JSON.stringify(oneWords))
+    for(let item of oneWords){
+      item.creater = await Models.User.findById(item.user_id)
+    }
 
     return res.json({
       result: true,
