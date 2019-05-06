@@ -338,10 +338,16 @@ const Api = {
     
     let log = await Models.UserGroup.findOne({group_id: groupId, user_id: userId})
 
+    let level = -1
+    
+    if(log){
+      level = log.level
+    }
+
     return res.json({
       result: true,
       message: '查询用户级别成功！',
-      data: log.level || -1
+      data: level
     })
   },
 
