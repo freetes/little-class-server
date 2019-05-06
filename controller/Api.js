@@ -341,7 +341,7 @@ const Api = {
     return res.json({
       result: true,
       message: '查询用户级别成功！',
-      data: log.userLevel || -1
+      data: log.level || -1
     })
   },
 
