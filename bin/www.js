@@ -41,12 +41,6 @@ app.set('port', port);
  */
 
 var server = https.createServer(httpsOptions, app);
-var io = require('socket.io')(server);
-
-io.of('/groupChat').on('connection', function(socket){
-  console.log('an user connected');
-});
-
 
 /**
  * Listen on provided port, on all network interfaces.
