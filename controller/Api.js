@@ -554,6 +554,37 @@ const Api = {
     })
   },
 
+  // POST /getUserChecks
+  /**
+   * @groupId
+   * @userId
+   */
+  getUserChecks: async (req, res)=>{
+    let groupId = req.body.groupId, userId = req.body.userId
+
+    let checkForms = await Models.CheckForm.find({group_id: groupId})
+
+    checkForms = JSON.parse(JSON.stringify(checkForms))
+
+    for(let item of checkForms){
+      let check = await Models.Check.find({form_id: item._id, user_id: userId})
+
+      // 未签到
+      if(check.length == 0){
+        item.checkStatus = 0
+      }
+      else{
+        item.checkStatus = check.status      
+      }
+    }
+
+    return res.json({
+      result: true,
+      message: '获取个人签到表成功！',
+      data: checkForms
+    })
+  },
+
   // POST /createNote
   /**
    * @userId

@@ -29,6 +29,7 @@ router.post('/getChecksByCheckFormId', api.getChecksByCheckFormId);
 
 // Check
 router.post('/createCheck', api.createCheck);
+router.post('/getUserChecks', api.getUserChecks);
 
 // Note
 router.post('/createNote', multipartMiddleware, api.createNote);
