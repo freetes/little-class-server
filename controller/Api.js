@@ -574,7 +574,7 @@ const Api = {
         item.checkStatus = 0
       }
       else{
-        item.checkStatus = check.status      
+        item.checkStatus = check[0].status      
       }
     }
 
