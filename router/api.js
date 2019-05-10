@@ -20,6 +20,7 @@ router.post('/editUserGroupInfo', api.editUserGroupInfo);
 router.post('/exitGroup', api.exitGroup);
 router.post('/disbandGroup', api.disbandGroup);
 router.post('/getUserLevel', api.getUserLevel);
+router.post('/getGroupChecksFile', api.getGroupChecksFile);
 
 // CheckForm
 router.post('/createCheckForm', api.createCheckForm);

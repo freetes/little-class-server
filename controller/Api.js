@@ -1,5 +1,6 @@
 const Models = require('../model/dataModel');
 const axios = require('axios');
+const xlsx = require('node-xlsx').default;
 const fs = require('fs');
 const path = require('path');
 const publicPath = path.join(__dirname, '../public'),
@@ -348,6 +349,52 @@ const Api = {
       result: true,
       message: '查询用户级别成功！',
       data: level
+    })
+  },
+
+  // POST /getGroupChecksFile
+  /**
+   * @param groupId
+   * @param userId
+   */
+  getGroupChecksFile: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let logs = await Models.UserGroup.find({group_id: groupId})
+    let groupInfo = await Models.Group.findById(groupId)
+    let checkForms = await Models.CheckForm.find({group_id: groupId})
+
+    let data = []
+
+    for(let log of logs){
+      let count = [0, 0, 0]
+
+      for(let form of checkForms){
+        count[0] = await Models.Check.countDocuments({user_id: log.user_id, form_id: form._id, status: 1})
+        count[1] = await Models.Check.countDocuments({user_id: log.user_id, form_id: form._id, status: -1})
+        count[2] = checkForms.length - count[0] - count[1]
+      }
+      data.push(log.nickname, count[0], count[1], count[2])
+    }
+
+    data = [groupInfo.name].concat(data)
+
+    console.log(data)
+
+    const range = {s: {c: 0, r:4 }, e: {c:0, r:0}}; // A1:A4
+    const options = {'!merges': [ range ]};
+
+    let buffer = xlsx.build([{name: groupId + '-sheet', data: data}], options); // Returns a buffer
+
+    let file = fs.writeFileSync( filePath + groupId + '-sheet' + '.xlsx', buffer)
+
+    return res.json({
+      result: true,
+      message: '生成文件',
+      data: {
+        file,
+        path: groupId + '-sheet' + '.xlsx'
+      }
     })
   },
 
