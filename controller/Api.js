@@ -593,12 +593,12 @@ const Api = {
   getGroupUserCheck: async (req, res)=>{
     let userId = req.body.userId, formId = req.body.formId
 
-    let check = await Models.Check.find({user_id: userId, form_id: formId})
+    let check = await Models.Check.findOne({user_id: userId, form_id: formId})
 
     let checkStatus = 0
 
-    if(check.length > 0){
-      checkStatus = check[0].status
+    if(check){
+      checkStatus = check.status
     }
 
     return res.json({
