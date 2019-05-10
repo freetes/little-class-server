@@ -660,12 +660,12 @@ const Api = {
   getUserCheckStatus: async (req, res)=>{
     let formId = req.body.formId, userId = req.body.userId
 
-    let checkForm = await Models.CheckForm.findById(formId)
+    let check = await Models.Check.find({form_id: formId, user_id: userId})
 
     let status = 0
 
-    if(checkForm){
-      status = checkForm.status
+    if(check.length > 0){
+      status = check[0].status
     }
 
     return res.json({
