@@ -355,7 +355,6 @@ const Api = {
   // POST /getGroupChecksFile
   /**
    * @param groupId
-   * @param userId
    */
   getGroupChecksFile: async (req, res)=>{
     let groupId = req.body.groupId
@@ -374,10 +373,10 @@ const Api = {
         count[1] = await Models.Check.countDocuments({user_id: log.user_id, form_id: form._id, status: -1})
         count[2] = checkForms.length - count[0] - count[1]
       }
-      data.push(log.nickname, count[0], count[1], count[2])
+      data.push([log.nickname, count[0], count[1], count[2]])
     }
 
-    data = [groupInfo.name].concat(data)
+    data = [[groupInfo.name]].concat(data)
 
     console.log(data)
 
