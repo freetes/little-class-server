@@ -598,7 +598,7 @@ const Api = {
     let checkStatus = 0
 
     if(check.length > 0){
-      checkStatus = check.status
+      checkStatus = check[0].status
     }
 
     return res.json({
