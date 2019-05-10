@@ -25,12 +25,14 @@ router.post('/getGroupChecksFile', api.getGroupChecksFile);
 // CheckForm
 router.post('/createCheckForm', api.createCheckForm);
 router.post('/getCheckFormsByGroupId', api.getCheckFormsByGroupId);
+router.post('/getNewestCheckFormByGroupId', api.getNewestCheckFormByGroupId);
 router.post('/getCheckFormById', api.getCheckFormById);
 router.post('/getChecksByCheckFormId', api.getChecksByCheckFormId);
 
 // Check
 router.post('/createCheck', api.createCheck);
 router.post('/getUserChecks', api.getUserChecks);
+router.post('/getUserCheckStatus', api.getUserCheckStatus);
 router.post('/getGroupUserCheck', api.getGroupUserCheck);
 
 // Note

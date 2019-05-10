@@ -514,6 +514,22 @@ const Api = {
     })
   },
 
+  // POST /getNewestCheckFormByGroupId
+  /**
+   * @groupId
+   */
+  getNewestCheckFormByGroupId: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let form = await Models.CheckForm.findOne({group_id: groupId}).sort({_id: -1})
+
+    return res.json({
+      result: true,
+      message: '获取最新签到表成功！',
+      data: form
+    })
+  },
+
   // POST /getCheckFormById
   /**
    * @checkFormId
@@ -633,6 +649,29 @@ const Api = {
       result: true,
       message: '获取个人签到表成功！',
       data: checkForms
+    })
+  },
+
+  // POST /getUserCheckStatus
+  /**
+   * @formId
+   * @userId
+   */
+  getUserCheckStatus: async (req, res)=>{
+    let formId = req.body.formId, userId = req.body.userId
+
+    let checkForm = await Models.CheckForm.findById(formId)
+
+    let status = 0
+
+    if(checkForm){
+      status = checkForm.status
+    }
+
+    return res.json({
+      result: true,
+      message: '获取个人签到状态成功！',
+      data: status
     })
   },
 
