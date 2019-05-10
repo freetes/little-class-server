@@ -585,6 +585,29 @@ const Api = {
     })
   },
 
+  // POST /getGroupUserCheck
+  /**
+   * @param formId
+   * @param userId
+   */
+  getGroupUserCheck: async (req, res)=>{
+    let userId = req.body.userId, formId = req.body.formId
+
+    let check = await Models.Check.find({user_id: userId, form_id: formId})
+
+    let checkStatus = 0
+
+    if(check.length > 0){
+      checkStatus = check.status
+    }
+
+    return res.json({
+      result: true,
+      message: '获取个人签到表状态成功！',
+      data: checkStatus
+    })
+  },
+
   // POST /createNote
   /**
    * @userId
