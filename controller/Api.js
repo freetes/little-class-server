@@ -376,7 +376,12 @@ const Api = {
       data.push([log.nickname, count[0], count[1], count[2]])
     }
 
-    data = [[groupInfo.name]].concat(data)
+    let sheetTitle = {
+      v: groupInfo.name,
+      t: 's'
+    }
+
+    data = [sheetTitle, ['姓名', '签到成功次数', '签到失败次数', '未签到次数']].concat(data)
 
     console.log(data)
 
@@ -389,7 +394,7 @@ const Api = {
 
     return res.json({
       result: true,
-      message: '生成文件',
+      message: '生成文件成功！',
       data: {
         file,
         path: groupId + '-sheet' + '.xlsx'
