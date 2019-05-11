@@ -1043,6 +1043,22 @@ const Api = {
     })
   },
 
+  // POST /getNewestNoticeByGroupId
+  /**
+   * @groupId
+   */
+  getNewestNoticeByGroupId: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let notice = await Models.Notice.findOne({group_id: groupId}).sort({_id: -1})
+
+    return res.json({
+      result: true,
+      message: '获取最新通知成功！',
+      data: notice
+    })
+  },
+
   // POST /createOneWord
   /**
    * @userId

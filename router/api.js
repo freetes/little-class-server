@@ -54,6 +54,7 @@ router.post('/createNotice', api.createNotice);
 router.post('/deleteNotice', api.deleteNotice);
 router.post('/getNoticeById', api.getNoticeById);
 router.post('/getNoticesByGroupId', api.getNoticesByGroupId);
+router.post('/getNewestNoticeByGroupId', api.getNewestNoticeByGroupId);
 
 // OneWord
 router.post('/createOneWord', api.createOneWord);
