@@ -25,6 +25,7 @@ router.post('/getGroupChecksFile', api.getGroupChecksFile);
 // CheckForm
 router.post('/createCheckForm', api.createCheckForm);
 router.post('/getCheckFormsByGroupId', api.getCheckFormsByGroupId);
+router.post('/getGroupCheckFormsLength', api.getGroupCheckFormsLength);
 router.post('/getNewestCheckFormByGroupId', api.getNewestCheckFormByGroupId);
 router.post('/getCheckFormById', api.getCheckFormById);
 router.post('/getChecksByCheckFormId', api.getChecksByCheckFormId);

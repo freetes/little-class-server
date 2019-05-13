@@ -481,7 +481,7 @@ const Api = {
   getCheckFormsByGroupId: async (req, res)=>{
     let groupId = req.body.groupId, userId = req.body.userId
 
-    let forms = await Models.CheckForm.find({group_id: groupId}).sort({_id: -1})
+    let forms = await Models.CheckForm.find({group_id: groupId}).limit(6).sort({_id: -1})
 
     forms = JSON.parse(JSON.stringify(forms))
 
@@ -511,6 +511,22 @@ const Api = {
       result: true,
       message: '获取签到表s成功！',
       data: forms
+    })
+  },
+
+  // POST /getGroupCheckFormsLength
+  /**
+   * @groupId
+   */
+  getGroupCheckFormsLength: async (req, res)=>{
+    let groupId = req.body.groupId
+
+    let length = await Models.CheckForm.countDocuments({group_id: groupId})
+    
+    return res.json({
+      result: true,
+      message: '获取群组签到表长度成功！',
+      data: length
     })
   },
 
