@@ -698,6 +698,35 @@ const Api = {
     })
   },
 
+  // POST /changeCheckStatus
+  /**
+   * @param formId
+   * @param userId
+   * @param status
+   */
+  changeCheckStatus: async (req, res)=>{
+    let userId = req.body.userId, formId = req.body.formId
+
+    // 删除已签到
+    if(req.body.status == 0){
+      await Models.Check.deleteOne({user_id: userId, form_id: formId})
+    }
+    else{
+      await Models.Check.create({
+        user_id: userId, 
+        form_id: formId, 
+        create_at: Date.now(),
+        status: 1
+      })
+    }
+
+    return res.json({
+      result: true,
+      message: '修改签到状态成功！',
+      data: null
+    })
+  },
+
   // POST /createNote
   /**
    * @userId

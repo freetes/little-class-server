@@ -34,6 +34,7 @@ router.post('/createCheck', api.createCheck);
 router.post('/getUserChecks', api.getUserChecks);
 router.post('/getUserCheckStatus', api.getUserCheckStatus);
 router.post('/getGroupUserCheck', api.getGroupUserCheck);
+router.post('/changeCheckStatus', api.changeCheckStatus);
 
 // Note
 router.post('/createNote', multipartMiddleware, api.createNote);
