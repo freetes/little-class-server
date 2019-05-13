@@ -1138,22 +1138,30 @@ const Api = {
    * @param count
    */
   getOneWordsByGroupId: async (req, res)=>{
-    let groupId = req.body.groupId, time = null, userId = null
+    let groupId = req.body.groupId, count = req.body.count || 0, userId = null
 
-    if(req.body.time){
-      time = new Date(req.body.time)
-    }
     if(req.body.userId){
       userId = req.body.userId
     }
 
-    // 获取弹幕
-    let oneWords = await Models.OneWord.find(
-      {
-        group_id: groupId,
-        user_id: {$ne: userId},
-        create_at: {$gte: time},
+    let amount = await Models.OneWord.countDocuments({group_id: groupId, user_id: {$ne: userId}})
+
+    if(count == 0){
+      return res.json({
+        result: true,
+        message: '获取弹幕s成功！',
+        data: {
+          oneWords: [],
+          amount
+        }
       })
+    }
+    
+    // 获取弹幕
+    let oneWords = await Models.OneWord.find({
+      group_id: groupId,
+      user_id: {$ne: userId}
+    }).skip(count)
     
     // 获取创建者信息
     oneWords = JSON.parse(JSON.stringify(oneWords))
@@ -1164,7 +1172,10 @@ const Api = {
     return res.json({
       result: true,
       message: '获取弹幕s成功！',
-      data: oneWords
+      data: {
+        oneWords,
+        amount
+      }
     })
   },
 
