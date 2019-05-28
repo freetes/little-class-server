@@ -65,6 +65,6 @@ router.post('/deleteOneWord', api.deleteOneWord);
 router.post('/getOneWordsByGroupId', api.getOneWordsByGroupId);
 
 // 集成
-// router.post('/', api)
+router.get('/getAllDataCount', getAllDataCount)
 
 module.exports = router;

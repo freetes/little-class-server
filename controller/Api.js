@@ -1195,6 +1195,26 @@ const Api = {
     })
   },
 
+  // POST /getAllDataCount
+  getAllDataCount: async (req, res)=>{
+
+    let groupCount = await Models.Group.countDocuments(),
+        checkCount = await Models.Check.countDocuments(),
+        oneWordCount = await Models.OneWord.countDocuments(),
+        noteCount = await Models.Note.countDocuments();
+
+    return res.json({
+      result: true,
+      message: '获取数据计数成功！',
+      data: {
+        groupCount,
+        checkCount,
+        oneWordCount,
+        noteCount
+      }
+    })
+  },
+
 };
 
 module.exports = Api;
